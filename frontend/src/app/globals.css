@@ -1,34 +1,130 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --accent-yellow: #ecad0a;
-  --primary-blue: #209dd7;
-  --secondary-purple: #753991;
-  --navy-dark: #032147;
-  --gray-text: #888888;
-  --surface: #f7f8fb;
-  --surface-strong: #ffffff;
-  --stroke: rgba(3, 33, 71, 0.08);
-  --shadow: 0 18px 40px rgba(3, 33, 71, 0.12);
-}
+@import "@fontsource/cormorant-garamond/300.css";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--surface);
-  --color-foreground: var(--navy-dark);
-  --font-sans: var(--font-body);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+  
+  /* Brand Tokens */
+  --color-brand-rose: var(--brand-rose);
+  --color-brand-sage: var(--brand-sage);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-espresso: var(--brand-espresso);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-muted: var(--brand-muted);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-* {
-  box-sizing: border-box;
+:root {
+  --radius: 0.75rem; /* softer corners overall */
+  
+  /* Dr. Farheen Brand Palette */
+  --brand-rose: #d4a3a3;
+  --brand-sage: #8ba88e;
+  --brand-gold: #e5c185;
+  --brand-espresso: #3e2f2f;
+  --brand-cream: #fdfaf6;
+  --brand-muted: #a6a6a6;
+
+  /* Aliased for UI */
+  --background: var(--brand-cream);
+  --foreground: var(--brand-espresso);
+  
+  --card: #ffffff;
+  --card-foreground: var(--brand-espresso);
+  
+  --popover: #ffffff;
+  --popover-foreground: var(--brand-espresso);
+  
+  --primary: var(--brand-rose);
+  --primary-foreground: #ffffff;
+  
+  --secondary: var(--brand-sage);
+  --secondary-foreground: #ffffff;
+  
+  --muted: #f3eded;
+  --muted-foreground: var(--brand-muted);
+  
+  --accent: #f9f1f1;
+  --accent-foreground: var(--brand-espresso);
+  
+  --destructive: #ef4444; /* standard red for actual errors */
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  --border: #e8dada; /* subtle rose bordering */
+  --input: #e8dada;
+  --ring: var(--brand-rose);
 }
 
-body {
-  background: var(--surface);
-  color: var(--navy-dark);
-  font-family: var(--font-body), "Segoe UI", sans-serif;
-  margin: 0;
+.dark {
+  /* We will force light mode for MVP to keep it pristine, but stub this to prevent breaking */
+  --background: var(--brand-espresso);
+  --foreground: var(--brand-cream);
+  --card: #2a2020;
+  --card-foreground: var(--brand-cream);
+  --popover: #2a2020;
+  --popover-foreground: var(--brand-cream);
+  --primary: var(--brand-rose);
+  --primary-foreground: #ffffff;
+  --secondary: var(--brand-sage);
+  --secondary-foreground: #ffffff;
+  --muted: #4a3a3a;
+  --muted-foreground: var(--brand-muted);
+  --accent: #4a3a3a;
+  --accent-foreground: var(--brand-cream);
+  --destructive: #ef4444;
+  --border: #4a3a3a;
+  --input: #4a3a3a;
+  --ring: var(--brand-rose);
 }
 
-.font-display {
-  font-family: var(--font-display), "Segoe UI", sans-serif;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-brand-espresso;
+  }
 }
