@@ -1,0 +1,46 @@
+# AI Booking Assistant Implementation Plan
+
+This document outlines the plan to build an AI Booking Assistant for the Homeopathy landing page. The goal is to provide a chat interface where patients can describe their symptoms, ask questions, and book appointments directly through the AI.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The AI assistant needs to be able to access the appointment booking logic. Would you like the AI to directly trigger the `book` API and send the email, or should the AI navigate the user to the Booking section of the page and pre-fill the form?
+>
+> Also, what should the widget look like? Should it be a floating action button (FAB) in the bottom right corner that expands into a chat window?
+
+## Proposed Changes
+
+### AI Chat Interface
+- We will create a floating chat widget that users can click to open a conversation.
+- The widget will match the current landing page aesthetics (using the existing color scheme and fonts like Cormorant Garamond and Inter).
+- It will include a message history and an input field for the user.
+
+#### [NEW] `frontend/src/components/ui/chat-widget.tsx`
+A newly created UI component for the chat interface.
+
+#### [MODIFY] [frontend/src/app/page.tsx](file:///c:/Users/altam/Projects/Vibe%20Code/pm/frontend/src/app/page.tsx)
+Import and render the `<ChatWidget />` on the main landing page.
+
+---
+
+### Backend API Integration
+- We will use the OpenRouter API with `openai/gpt-oss-120b` (as specified in the original rules) or another suitable model to power the conversation.
+- We will implement function calling (Structured Outputs) to allow the LLM to understand when a user wants to book an appointment or send a message.
+
+#### [NEW] `frontend/src/app/api/chat/route.ts`
+The main endpoint that the frontend widget will communicate with. It will handle forwarding the user's messages to OpenRouter and processing the AI's response (including executing any tool calls like `book_appointment` or `send_contact_message`).
+
+## Verification Plan
+
+### Automated Tests
+- Test the `/api/chat` route with mock user messages to ensure it correctly calls OpenRouter and returns a coherent response.
+- Test the LLM function calls by simulating a user asking "I want to book an appointment for tomorrow." Verify that the API correctly parses this intent and attempts to call the booking logic.
+
+### Manual Verification
+- Start the development server (`npm run dev`).
+- Open the landing page and verify the chat widget appears correctly and matches the design.
+- Interact with the chat widget:
+  - Ask general homeopathy questions to test standard responses.
+  - Ask to book an appointment and verify the email is successfully sent to `altovate.ai@gmail.com` with the correct details.
+  - Ask to send a contact message and verify that email is also successfully sent.

@@ -1,0 +1,18 @@
+# AI Booking Assistant Implementation
+
+- [ ] Plan the AI functionality and get user approval
+  - [ ] Define AI widget UI placement and design
+  - [ ] Define backend API interaction (OpenRouter integration)
+  - [ ] Update [AGENTS.md](file:///c:/Users/altam/Projects/Vibe%20Code/pm/AGENTS.md) and [PLAN.md](file:///c:/Users/altam/Projects/Vibe%20Code/pm/docs/PLAN.md) to reflect new landing page goals
+- [ ] Implement AI Backend API
+  - [ ] Create `/api/chat/route.ts` to handle chat requests
+  - [ ] Integrate OpenRouter API
+  - [ ] Implement function calling/structured outputs to allow the AI to trigger booking/contact emails
+- [ ] Implement AI Frontend Widget
+  - [ ] Create a floating chat widget component
+  - [ ] Integrate chat widget with the backend API
+  - [ ] Ensure the widget matches the existing color scheme and design
+- [ ] Testing & Refinement
+  - [ ] Test AI responses
+  - [ ] Test AI triggering the booking email
+  - [ ] Test AI triggering the contact email
