@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -45,8 +46,8 @@ export function Navbar() {
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
-                    ? "bg-background/90 backdrop-blur-md border-b shadow-sm py-3"
-                    : "bg-transparent py-5"
+                ? "bg-background/90 backdrop-blur-md border-b shadow-sm py-3"
+                : "bg-transparent py-5"
                 }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,13 +56,23 @@ export function Navbar() {
                     {/* Logo */}
                     <Link
                         href="#"
-                        className="text-2xl font-serif font-bold text-brand-espresso tracking-tight"
+                        className="flex items-center gap-3 group"
                         onClick={(e) => {
                             e.preventDefault();
                             window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                     >
-                        Dr. Farheen<span className="text-brand-rose">.</span>
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-brand-gold/60 bg-white shadow-sm shrink-0 flex items-center justify-center -ml-2">
+                            <Image
+                                src="/logo.jpeg"
+                                alt="Dr. Farheen Logo"
+                                fill
+                                className="object-cover object-[-3px_center] transition-transform duration-500 group-hover:scale-110"
+                            />
+                        </div>
+                        <span className="text-2xl font-serif font-bold text-brand-espresso tracking-tight">
+                            Dr. Farheen<span className="text-brand-rose">.</span>
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}

@@ -3,63 +3,63 @@ import { Resend } from "resend";
 import { z } from "zod";
 
 const testimonySchema = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters."),
-    rating: z.number().int().min(1).max(5),
-    condition: z.string().optional(),
-    story: z.string().min(30, "Please share at least a sentence or two about your experience."),
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  rating: z.number().int().min(1).max(5),
+  condition: z.string().optional(),
+  story: z.string().min(30, "Please share at least a sentence or two about your experience."),
 });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Update to Dr. Farheen's real email when moving to production
-const DOCTOR_EMAIL = "altovate.ai@gmail.com";
+// The email addresses Dr. Farheen will receive notifications at.
+const RECIPIENT_EMAILS = ["altovate.ai@gmail.com"];
 
 export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json();
+  try {
+    const body = await request.json();
 
-        const result = testimonySchema.safeParse(body);
-        if (!result.success) {
-            const firstError = result.error.issues[0]?.message || "Invalid data.";
-            return NextResponse.json({ error: firstError }, { status: 400 });
-        }
-
-        const { name, rating, condition, story } = result.data;
-
-        const { error: sendError } = await resend.emails.send({
-            from: "Patient Testimony <onboarding@resend.dev>",
-            to: [DOCTOR_EMAIL],
-            subject: `${"⭐".repeat(rating)} New Patient Testimony: ${name}`,
-            html: buildEmailHtml({ name, rating, condition: condition || "Not specified", story }),
-        });
-
-        if (sendError) {
-            console.error("Resend error:", sendError);
-            return NextResponse.json(
-                { error: "Failed to send testimony. Please try again." },
-                { status: 500 }
-            );
-        }
-
-        return NextResponse.json({ success: true });
-    } catch (err) {
-        console.error("Testimony API error:", err);
-        return NextResponse.json(
-            { error: "Something went wrong. Please try again later." },
-            { status: 500 }
-        );
+    const result = testimonySchema.safeParse(body);
+    if (!result.success) {
+      const firstError = result.error.issues[0]?.message || "Invalid data.";
+      return NextResponse.json({ error: firstError }, { status: 400 });
     }
+
+    const { name, rating, condition, story } = result.data;
+
+    const { error: sendError } = await resend.emails.send({
+      from: "Patient Testimony <onboarding@resend.dev>",
+      to: RECIPIENT_EMAILS,
+      subject: `${"⭐".repeat(rating)} New Patient Testimony: ${name}`,
+      html: buildEmailHtml({ name, rating, condition: condition || "Not specified", story }),
+    });
+
+    if (sendError) {
+      console.error("Resend error:", sendError);
+      return NextResponse.json(
+        { error: "Failed to send testimony. Please try again." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("Testimony API error:", err);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again later." },
+      { status: 500 }
+    );
+  }
 }
 
 function buildEmailHtml(data: {
-    name: string;
-    rating: number;
-    condition: string;
-    story: string;
+  name: string;
+  rating: number;
+  condition: string;
+  story: string;
 }) {
-    const stars = "⭐".repeat(data.rating) + "☆".repeat(5 - data.rating);
+  const stars = "⭐".repeat(data.rating) + "☆".repeat(5 - data.rating);
 
-    return `
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,10 +130,10 @@ function buildEmailHtml(data: {
 }
 
 function escapeHtml(str: string): string {
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

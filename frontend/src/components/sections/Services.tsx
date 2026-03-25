@@ -15,32 +15,38 @@ const services = [
     {
         icon: Flower2,
         title: "Women's Health",
+        tag: "Women's Health",
         description: "Natural support for PCOS, menstrual irregularities, menopause symptoms, and hormonal imbalances without synthetic hormones."
     },
     {
         icon: Activity,
         title: "Chronic Disease Management",
+        tag: "Chronic Care",
         description: "Deep-acting constitutional remedies for asthma, allergies, arthritis, hypertension, and long-standing chronic conditions."
     },
     {
         icon: Baby,
         title: "Child & Pediatric Care",
+        tag: "Pediatric",
         description: "Gentle, sweet-tasting remedies perfect for children. Effective for recurring colds, adenoids, tonsillitis, and behavioral issues."
     },
     {
         icon: Sparkles,
         title: "Skin & Hair Disorders",
-        description: "Treating acne, eczema, psoriasis, and hair fall from the inside out, addressing the root internal cause."
+        tag: "Dermatology",
+        description: "Supporting acne, eczema, psoriasis, and hair fall from the inside out, addressing the root internal cause."
     },
     {
         icon: Brain,
         title: "Stress & Mental Wellness",
+        tag: "Mental Wellness",
         description: "Holistic relief for anxiety, depression, insomnia, and chronic stress, restoring emotional equilibrium."
     },
     {
         icon: Apple,
         title: "Digestive Health",
-        description: "Resolving IBS, acidity, gastric ulcers, and chronic constipation by improving gut immunity and digestion."
+        tag: "Gut Health",
+        description: "Managing IBS, acidity, gastric ulcers, and chronic constipation by improving gut immunity and digestion."
     }
 ];
 
@@ -73,7 +79,7 @@ export function Services() {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.6 }}
                     >
-                        Specialized Treatments
+                        Conditions I Support
                     </motion.h2>
                     <motion.div
                         className="w-24 h-1 bg-brand-rose mx-auto rounded-full mb-6"
@@ -89,7 +95,7 @@ export function Services() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                     >
-                        Homeopathy is a tailored science. Every prescription is uniquely selected based on your physical, mental, and emotional constitution.
+                        Homeopathy is a tailored science. I uniquely select every prescription based on your physical, mental, and emotional constitution.
                     </motion.p>
                 </div>
 
@@ -103,21 +109,26 @@ export function Services() {
                 >
                     {services.map((service, index) => (
                         <motion.div key={index} variants={itemVariants}>
-                            <Card className="h-full border-brand-rose/10 hover:border-brand-rose/30 hover:shadow-lg transition-all duration-300 bg-white group cursor-pointer overflow-hidden relative">
+                            <Card className="h-full border-brand-rose/10 hover:border-brand-rose/30 active:border-brand-rose/30 hover:shadow-lg active:shadow-lg hover:-translate-y-1 active:-translate-y-1 transition-all duration-300 bg-white group cursor-pointer overflow-hidden relative border-l-4 border-l-transparent hover:border-l-brand-rose active:border-l-brand-rose">
 
-                                {/* Minimalist accent line on hover */}
-                                <div className="absolute top-0 left-0 w-full h-1 bg-brand-rose scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+                                {/* Minimalist accent line on hover/active */}
+                                <div className="absolute top-0 left-0 w-full h-1 bg-brand-rose scale-x-0 group-hover:scale-x-100 group-active:scale-x-100 transition-transform origin-left duration-500" />
 
                                 <CardHeader className="p-8">
-                                    <div className="w-14 h-14 rounded-2xl bg-brand-sage/10 text-brand-sage flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-brand-sage group-hover:text-white">
+                                    <div className="w-14 h-14 rounded-2xl bg-brand-sage/10 text-brand-sage flex items-center justify-center mb-6 group-hover:scale-110 group-active:scale-110 transition-transform duration-300 group-hover:bg-brand-sage group-active:bg-brand-sage group-hover:text-white group-active:text-white">
                                         <service.icon className="w-7 h-7" strokeWidth={1.5} />
                                     </div>
                                     <CardTitle className="font-serif text-2xl text-brand-espresso mb-3">
                                         {service.title}
                                     </CardTitle>
-                                    <CardDescription className="text-base text-brand-muted leading-relaxed">
+                                    <CardDescription className="text-base text-brand-muted leading-relaxed mb-4">
                                         {service.description}
                                     </CardDescription>
+
+                                    {/* Condition Tag */}
+                                    <span className="inline-flex items-center bg-brand-sage/10 text-brand-sage border border-brand-sage/20 rounded-full px-3 py-1 text-xs font-medium">
+                                        {service.tag}
+                                    </span>
                                 </CardHeader>
                             </Card>
                         </motion.div>
