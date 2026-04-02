@@ -4,6 +4,7 @@ import { Services } from "@/components/sections/Services";
 import { Booking } from "@/components/sections/Booking";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Contact } from "@/components/sections/Contact";
+import { ChatWidget } from "@/components/ui/ChatWidget";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Booking />
       <Testimonials />
       <Contact />
+      <ChatWidget />
     </>
   );
 }

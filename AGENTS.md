@@ -1,53 +1,58 @@
-# The Project Management MVP web app
+# Dr. Farheen Homeopathy -- Landing Page with AI Assistant
 
-## Business Requirements
+## What this project is
 
-This project is building a Project Management App. Key features:
-- A user can sign in
-- When signed in, the user sees a Kanban board representing their project
-- The Kanban board has fixed columns that can be renamed
-- The cards on the Kanban board can be moved with drag and drop, and edited
-- There is an AI chat feature in a sidebar; the AI is able to create / edit / move one or more cards
+A production landing page for a homeopathic doctor. The Next.js frontend is fully built.
+We are adding an AI chat widget so patients can interact naturally.
 
-## Limitations
+## How the site works today
 
-For the MVP, there will only be a user sign in (hardcoded to 'user' and 'password') but the database will support multiple users for future.
+### Booking consultations -- via WhatsApp (NO email)
+The Booking section opens a WhatsApp link with a prebuilt message:
+- Number: `918452860941`
+- Message: "Hi Doctor Farheen, I am interested in Scheduling Consultation."
+- Implementation: `Booking.tsx` builds a `wa.me` link. No backend, no email.
 
-For the MVP, there will only be 1 Kanban board per signed in user.
+### Contact info -- static display (NO form, NO email)
+The Contact section shows phone number and email address. No form submission.
 
-For the MVP, this will run locally (in a docker container)
+### Patient testimony -- Moving to WhatsApp (Zero Backend Needed)
+Historically there was an email backend, but Dr. Farheen prefers WhatsApp. We are shifting testimonies to be collected via WhatsApp links directly.
 
-## Technical Decisions
+## What we are building: AI Chat Assistant
 
-- NextJS frontend
-- Python FastAPI backend, including serving the static NextJS site at /
-- Everything packaged into a Docker container
-- Use "uv" as the package manager for python in the Docker container
-- Use OpenRouter for the AI calls. An OPENROUTER_API_KEY is in .env in the project root
-- Use `openai/gpt-oss-120b` as the model
-- Use SQLLite local database for the database, creating a new db if it doesn't exist
-- Start and Stop server scripts for Mac, PC, Linux in scripts/
+A floating chat widget with 2 core behaviors:
 
-## Starting Point
+### 1. Help patients understand their condition
+- Explain how homeopathy can help for their specific condition
+- Use general, accessible language
+- Be transparent and honest -- genuine concern to help
+- ALWAYS guide them toward booking a consultation via a WhatsApp link generated in chat.
 
-A working MVP of the frontend has been built and is already in frontend. This is not yet designed for the Docker setup. It's a pure frontend-only demo.
+### 2. Help treated patients write testimonials
+- Ask conversational questions to collect: name, rating, condition, story
+- Once all info is collected, **generate a WhatsApp link** so the patient can send it directly to Dr. Farheen.
+- NO tool calling is needed. NO emails are sent. This makes the AI entirely stateless and very fast.
 
-## Color Scheme
+### Future: RAG integration
+- Knowledge base about Dr. Farheen's practice, conditions treated, etc.
+- Not part of the current implementation
 
-- Accent Yellow: `#ecad0a` - accent lines, highlights
-- Blue Primary: `#209dd7` - links, key sections
-- Purple Secondary: `#753991` - submit buttons, important actions
-- Dark Navy: `#032147` - main headings
-- Gray Text: `#888888` - supporting text, labels
+## Technical Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4 + Shadcn UI
+- **AI**: OpenRouter (using `openrouter/free` model)
 
 ## Coding standards
 
-1. Use latest versions of libraries and idiomatic approaches as of today
-2. Keep it simple - NEVER over-engineer, ALWAYS simplify, NO unnecessary defensive programming. No extra features - focus on simplicity.
-3. Be concise. Keep README minimal. IMPORTANT: no emojis ever
-4. When hitting issues, always identify root cause before trying a fix. Do not guess. Prove with evidence, then fix the root cause.
+1. No over-engineering. Each file does one job.
+2. No unnecessary defensive code.
+3. No emojis in code or comments.
+4. When something breaks, find root cause with evidence before fixing.
+5. Keep README minimal.
 
 ## Working documentation
 
-All documents for planning and executing this project will be in the docs/ directory.
-Please review the docs/PLAN.md document before proceeding.
+All planning docs are in `docs/`. Read `docs/PLAN.md` before making changes.

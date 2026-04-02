@@ -51,24 +51,18 @@ export function TestimonyForm({ onSuccess }: TestimonyFormProps) {
 
     const onSubmit = async (data: TestimonyValues) => {
         try {
-            const res = await fetch("/api/testimony", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
+            const whatsappNumber = "918452860941";
+            const message = `New Patient Testimony\n\nName: ${data.name}\nRating: ${data.rating}/5\nCondition: ${data.condition || "Not specified"}\nStory: ${data.story}`;
+            
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappLink, "_blank");
 
-            const json = await res.json();
-
-            if (!res.ok) {
-                toast.error(json.error || "Something went wrong. Please try again.");
-                return;
-            }
-
-            toast.success("Thank you for sharing your story! 🌿 Dr. Farheen will review your testimony.");
+            toast.success("Thank you for sharing! Please send the message in WhatsApp to complete your submission.");
             reset();
             onSuccess();
         } catch {
-            toast.error("Could not submit your testimony. Please check your connection and try again.");
+            toast.error("Could not process your testimony. Please try again.");
         }
     };
 

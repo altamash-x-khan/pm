@@ -1,37 +1,36 @@
-# High level steps for project
+# Plan -- AI Chat Assistant for Dr. Farheen Homeopathy
 
-Part 1: Plan
+The Next.js landing page is complete. This plan covers the AI assistant widget.
 
-Enrich this document to plan out each of these parts in detail, with substeps listed out as a checklist to be checked off by the agent, and with tests and success critieria for each. Also create an AGENTS.md file inside the frontend directory that describes the existing code there. Ensure the user checks and approves the plan.
+## Phase 1: Plan (CURRENT)
 
-Part 2: Scaffolding
+- Adopt "WhatsApp Everything" Strategy: No emails, no backend tool/function calling.
+- Ensure `openrouter/free` model is used.
+- Update AGENTS.md and PLAN.md.
 
-Set up the Docker infrastructure, the backend in backend/ with FastAPI, and write the start and stop scripts in the scripts/ directory. This should serve example static HTML to confirm that a 'hello world' example works running locally and also make an API call.
+## Phase 2: Backend -- `/api/chat` route
 
-Part 3: Add in Frontend
+- Accept `{ messages }` from the frontend
+- Call OpenRouter with conversation history + system prompt
+- System prompt instructs AI to generate:
+  - `wa.me/918452860941?text=...` for bookings.
+  - `wa.me/918452860941?text=...` for testimonies.
+- Return plain response text to frontend
+- *Engineering win: The BFF route is now stateless AND side-effect free.*
 
-Now update so that the frontend is statically built and served, so that the app has the demo Kanban board displayed at /. Comprehensive unit and integration tests.
+## Phase 3: Frontend -- Chat widget
 
-Part 4: Add in a fake user sign in experience
+- Floating button (bottom right) -- opens a chat panel
+- Stores message history in React state
+- On send: POST full history to `/api/chat`, append AI response
+- Render Markdown/Links in the chat so the user can easily click the WhatsApp links.
 
-Now update so that on first hitting /, you need to log in with dummy credentials ("user", "password") in order to see the Kanban, and you can log out. Comprehensive tests.
+## Phase 4: Test
 
-Part 5: Database modeling
+- Test condition explanation flow
+- Test clicking the AI-generated WhatsApp booking link
+- Test clicking the AI-generated WhatsApp testimony link
 
-Now propose a database schema for the Kanban, saving it as JSON. Document the database approach in docs/ and get user sign off.
+## Future
 
-Part 6: Backend
-
-Now add API routes to allow the backend to read and change the Kanban for a given user; test this thoroughly with backend unit tests. The database should be created if it doesn't exist.
-
-Part 7: Frontend + Backend
-
-Now have the frontend actually use the backend API, so that the app is a proper persistent Kanban board. Test very throughly.
-
-Part 8: AI connectivity
-
-Now allow the backend to make an AI call via OpenRouter. Test connectivity with a simple "2+2" test and ensure the AI call is working.
-
-Part 9: Now extend the backend call so that it always calls the AI with the JSON of the Kanban board, plus the user's question (and conversation history). The AI should respond with Structured Outputs that includes the response to the user and optionaly an update to the Kanban. Test thoroughly.
-
-Part 10: Now add a beautiful sidebar widget to the UI supporting full AI chat, and allowing the LLM (as it determines) to update the Kanban based on its Structured Outputs. If the AI updates the Kanban, then the UI should refresh automatically.
+- RAG: Knowledge base about Dr. Farheen's practice for more informed answers
