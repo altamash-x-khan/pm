@@ -11,15 +11,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { TestimonyForm } from "@/components/sections/TestimonyForm";
 import Autoplay from "embla-carousel-autoplay";
 
 const testimonials = [
@@ -82,7 +74,6 @@ export function Testimonials() {
     const plugin = React.useRef(
         Autoplay({ delay: 5000, stopOnInteraction: true })
     );
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <section id="testimonials" className="py-24 bg-white relative overflow-hidden">
@@ -129,12 +120,12 @@ export function Testimonials() {
                         <p className="text-brand-muted text-sm mb-3 font-medium">Treated by me?</p>
                         <Button
                             id="share-story-btn"
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-chat', { detail: { mode: 'TESTIMONY' } }))}
                             variant="outline"
                             className="border-brand-rose/40 bg-brand-rose/10 text-brand-rose hover:bg-brand-rose/20 hover:border-brand-rose/60 hover:text-brand-rose rounded-full px-8 py-6 text-base font-medium transition-all duration-300 shadow-md gap-2"
                         >
                             <Heart className="w-5 h-5" />
-                            I&apos;d love to hear your story
+                            Share with AI Assistant
                         </Button>
                     </motion.div>
                 </div>
@@ -166,7 +157,7 @@ export function Testimonials() {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        
+
                         {/* Navigation Arrows: Centered at bottom for Desktop, Sides for Mobile */}
                         <div className="hidden sm:flex justify-center gap-4 mt-12 pb-4">
                             <CarouselPrevious className="static translate-y-0 translate-x-0 bg-white border-brand-rose/20 text-brand-rose hover:bg-brand-rose hover:text-white shadow-sm w-12 h-12" />
@@ -183,20 +174,6 @@ export function Testimonials() {
 
             </div>
 
-            {/* Testimony Modal */}
-            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl">
-                    <DialogHeader>
-                        <DialogTitle className="font-serif text-2xl text-brand-espresso">
-                            Share Your Healing Journey
-                        </DialogTitle>
-                        <DialogDescription className="text-brand-muted">
-                            Your story could inspire someone who is still searching for hope. I will review your testimony before publishing it.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <TestimonyForm onSuccess={() => setIsModalOpen(false)} />
-                </DialogContent>
-            </Dialog>
         </section>
     );
 }

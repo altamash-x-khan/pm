@@ -37,11 +37,13 @@ export function Booking() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
                 >
-                    Healing begins with being heard. Message me directly to discuss your symptoms and schedule your consultation.
+                    Healing begins with being heard. Message me directly to schedule your consultation.<br/>
+                    <span className="text-sm mt-3 inline-block">Not sure what to expect? Chat with our AI assistant first for quick guidance.</span>
                 </motion.p>
 
-                {/* WhatsApp Button */}
+                {/* Buttons */}
                 <motion.div
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -51,11 +53,18 @@ export function Booking() {
                         href={whatsappLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-3 bg-brand-rose hover:bg-brand-rose/90 text-white rounded-full py-4 px-10 text-lg font-medium transition-transform hover:scale-105 shadow-sm"
+                        className="inline-flex items-center justify-center gap-3 bg-brand-rose hover:bg-brand-rose/90 text-white rounded-full py-4 px-8 text-lg font-medium transition-transform hover:scale-105 shadow-sm w-full sm:w-auto"
                     >
                         <MessageCircle className="w-6 h-6 mb-0.5" />
                         Message on WhatsApp
                     </a>
+
+                    <button
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-chat', { detail: { mode: 'ENQUIRY' } }))}
+                        className="inline-flex items-center justify-center gap-3 bg-white border-2 border-brand-rose/20 text-brand-espresso hover:bg-brand-rose/5 hover:border-brand-rose/40 rounded-full py-4 px-8 text-lg font-medium transition-all shadow-sm w-full sm:w-auto"
+                    >
+                        Ask AI Assistant
+                    </button>
                 </motion.div>
             </div>
         </section>

@@ -18,8 +18,7 @@ interface OpenRouterChoice {
 // -- Constants --
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-// Using a fast, reliable model for the chat widget
-const MODEL = "openrouter/free";
+const MODEL = "qwen/qwen3.6-plus:free";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const WHATSAPP_NUMBER = "918452860941";

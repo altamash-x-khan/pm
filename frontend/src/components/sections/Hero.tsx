@@ -113,7 +113,7 @@ export function Hero() {
                             <Button
                                 variant="outline"
                                 className="border-brand-rose/30 bg-brand-rose/5 text-brand-rose hover:bg-brand-rose/15 hover:text-brand-rose hover:border-brand-rose/50 rounded-full px-6 py-4 text-sm font-medium transition-all shadow-sm gap-2 mx-auto flex"
-                                onClick={() => scrollToSection("#testimonials")}
+                                onClick={() => window.dispatchEvent(new CustomEvent('open-chat', { detail: { mode: 'TESTIMONY' } }))}
                             >
                                 <Heart className="w-4 h-4" />
                                 Share Your Story
